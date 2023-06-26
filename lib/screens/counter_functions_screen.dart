@@ -15,16 +15,6 @@ class _CounterFunctionsScreenState extends State<CounterFunctionsScreen> {
     return Scaffold(
         appBar: AppBar(
           title: const Text('Counter'),
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.refresh_rounded),
-              onPressed: () {
-                setState(() {
-                  clickCounter = 0;
-                });
-              },
-            )
-          ],
         ),
         body: Center(
           child: Column(
@@ -32,33 +22,62 @@ class _CounterFunctionsScreenState extends State<CounterFunctionsScreen> {
             children: [
               Text('$clickCounter',
                   style: const TextStyle(
-                      fontSize: 160, fontWeight: FontWeight.w100)),
+                      fontSize: 160, fontWeight: FontWeight.w100, color: Colors.blue )),
               Text('Click${clickCounter == 1 ? '' : 's'}',
-                  style: const TextStyle(fontSize: 25))
+                  style: const TextStyle(fontSize: 32, color: Colors.lightBlue))
             ],
           ),
         ),
         floatingActionButton: Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            FloatingActionButton(
+            CustomButton(
+              icon: Icons.refresh_outlined,
+              onPressed: () {
+                setState(() {
+                  clickCounter = 0;
+                });
+              },
+            ),
+            const SizedBox(height: 10),
+            CustomButton(
+              icon: Icons.plus_one_outlined,
               onPressed: () {
                 setState(() {
                   clickCounter++;
                 });
               },
-              child: const Icon(Icons.plus_one),
             ),
             const SizedBox(height: 10),
-            FloatingActionButton(
+            CustomButton(
+              icon: Icons.exposure_minus_1_outlined,
               onPressed: () {
                 setState(() {
-                  clickCounter == 0 ?  clickCounter : clickCounter--;
+                  clickCounter == 0 ? clickCounter : clickCounter--;
                 });
               },
-              child: const Icon(Icons.exposure_minus_1_outlined),
             ),
           ],
         ));
+  }
+}
+
+class CustomButton extends StatelessWidget {
+  final IconData icon;
+  final VoidCallback? onPressed;
+
+  const CustomButton({
+    super.key,
+    required this.icon,
+    this.onPressed,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return FloatingActionButton(
+      backgroundColor: Colors.cyan,
+      onPressed: onPressed,
+      child: Icon(icon),
+    );
   }
 }
